@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load customtags %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Players" "players:index" %}
+    {% breadcrumb "Details" %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">
+        <i class="fas fa-user-circle mr-2"></i>
+        {% block title %}{{ player }}{% endblock %}
+    </h1>
+    {% racetimetable player_detail_times player_detail_times racetime_columns %}
+{% endblock %}

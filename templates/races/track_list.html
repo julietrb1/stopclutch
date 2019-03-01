@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load customtags %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Tracks" %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        <i class="fas fa-map-marker mr-2"></i>
+        {% block title %}Tracks{% endblock %}
+    </h1>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Race times</th>
+                <th scope="col">Fastest</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for track in object_list %}
+                <tr>
+                    <th scope="row"><a href="{% url 'tracks:detail' track.id %}">{{ track }}</a></th>
+                    <td>{{ track.racetime_set.count }}</td>
+
+                    {% with track.fastest_time as fastest_time %}
+                        <td><a href="{% url 'racetimes:detail' fastest_time.id %}">
+                            {{ fastest_time.race_duration|durationformat }}</a></td>
+                    {% endwith %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% bootstrap_pagination page_obj %}
+    {% else %}
+        <p>No tracks are available.</p>
+    {% endif %}
+{% endblock %}

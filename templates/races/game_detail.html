@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load customtags %}
+{% load humanize %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Games" "games:index" %}
+    {% breadcrumb "Details" %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% modelimage game.image 'makelogo-detail' game.name %}
+        {% block title %}{{ game }}{% endblock %}
+    </h1>
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="mt-4">Recent game times</h3>
+            {% racetimetable recent_game_times recent_game_times %}
+        </div>
+        <div class="col-md-4">
+            <h3 class="mt-4">Frequent players</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Player</th>
+                    <th scope="col">Race times</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for player in frequent_players %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'players:detail' player.id %}">{{ player }}</a></th>
+                        <td>{{ player.race_time_count }}</td>
+                        <td>{{ racetime.race_date_time|naturaltime }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

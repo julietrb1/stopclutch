@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load customtags %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Vehicle models" "vehiclemodels:index" %}
+    {% breadcrumb "Details" %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {% modelimage vehiclemodel.make.image 'makelogo-detail' vehiclemodel.make.name %}
+        {% block title %}{{ vehiclemodel }}{% endblock %}
+    </h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <h3 class="mt-4">Fastest category times</h3>
+            {% racetimetable recent_times recent_times racetime_columns %}
+        </div>
+        <div class="col-lg-4">
+            <h3 class="mt-4">Fastest time</h3>
+            <a href="{% url 'racetimes:detail' fastest_time.id %}">
+                <b>{{ fastest_time.player }} @ {{ fastest_time.track }}</b><br/>
+                {{ fastest_time.race_duration|durationformat }}
+            </a>
+            <h3 class="mt-4">Latest time</h3>
+            <a href="{% url 'racetimes:detail' most_recent_time.id %}">
+                <b>{{ most_recent_time.player }} @ {{ most_recent_time.track }}</b><br/>
+                {{ most_recent_time.race_duration|durationformat }}
+            </a>
+        </div>
+    </div>
+{% endblock %}

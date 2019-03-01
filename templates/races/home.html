@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load customtags %}
+{% load humanize %}
+{% block breadcrumbs_base %}{% endblock %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Stopclutch</h1>
+        <p class="lead">You've stumbled upon the haven of race times for racing games{% if first_game %}
+            such as <a href="{% url 'games:detail' first_game.id %}">{{ first_game }}</a>{% endif %}.</p>
+        <hr class="my-4">
+        <p>
+            Keen to jump straight into the action and see race times{% if most_recent_race_time %}
+            like <a href="{% url 'racetimes:detail' most_recent_race_time.id %}">
+                {{ most_recent_race_time.player.first_name }}'s
+                {{ most_recent_race_time.race_duration|durationformat }} run at
+                {{ most_recent_race_time.track.name }}
+                in the {{ most_recent_race_time.vehicle_model }}</a>{% endif %}?
+        </p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'racetimes:index' %}" role="button">See
+                {{ race_time_count|intcomma }} race time{{ race_time_count|pluralize }}</a>
+            <a class="btn btn-secondary btn-lg" href="{% url 'faqs' %}">Read FAQs</a>
+        </p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user-circle mr-2"></i> Players</h5>
+                    <p class="card-text">Hoons {% if random_player %}like
+                        <a href="{% url 'players:detail' random_player.id %}">
+                            {{ random_player.first_name }}</a>{% endif %} gunned
+                        it around a track to see what they could do. Take a look at how they stack up.</p>
+                    <a href="{% url 'players:index' %}" class="btn btn-primary">See {{ player_count|intcomma }}
+                        player{{ player_count|pluralize }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4 mb-md-0">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-map-marker mr-2"></i> Tracks</h5>
+                    <p class="card-text">Given its collection of tracks{% if random_track %}
+                        such as <a href="{% url 'tracks:detail' random_track.id %}">{{ random_track }}</a>{% endif %},
+                        Stopclutch lets you find and compare times on any given track. Nerd heaven, right?</p>
+                    <a href="{% url 'tracks:index' %}" class="btn btn-primary">See {{ track_count|intcomma }}
+                        track{{ track_count|pluralize }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-car mr-2"></i> Vehicles</h5>
+                    <p class="card-text">
+                        {% if random_vehicle %}The <a href="{% url 'vehiclemodels:detail' random_vehicle.id %}">
+                            {{ random_vehicle }}</a> made it here.
+                        {% endif %}With vehicles being added regularly, you're sure to find something you like.</p>
+                    <a href="{% url 'vehiclemodels:index' %}" class="btn btn-primary">See {{ vehicle_count|intcomma }}
+                        vehicle{{ vehicle_count|pluralize }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

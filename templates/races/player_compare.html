@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load customtags %}
+{% load bootstrap4 %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Players" "players:index" %}
+    {% breadcrumb "Compare" %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        <i class="fas fa-balance-scale mr-2"></i>
+        {% block title %}Compare players{% endblock %}
+    </h1>
+    <form class="mb-4" method="get" action="{% url 'players:compare' %}">
+        <div class="row">
+            <div class="col-md-3">
+                {% bootstrap_field player_compare_form.game %}
+            </div>
+            {% for field in player_compare_form.player_fields %}
+                <div class="col-md-3">
+                    {% bootstrap_field field %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-3 col-md-2">
+                <input type="submit" class="btn btn-success" value="Compare">
+            </div>
+            <div class="col-6 col-sm-9 col-md-10">
+                {% bootstrap_field player_compare_form.matching_only %}
+            </div>
+        </div>
+
+    </form>
+
+    {% if racetime_groups and player_groups %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Category</th>
+                {% for player_id, player_group in player_groups.items %}
+                    <th scope="col">
+                        <a href="{% url 'players:detail' player_group.player.id %}">
+                            {{ player_group.player.first_name }}
+                        </a>
+                        <span class="badge badge-{% if player_group.winner %}success{% else %}secondary{% endif %}">
+                            {{ player_group.wins }} / {{ racetime_groups|length }}
+                        </span>
+
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for racetime_group in racetime_groups %}
+                <tr>
+                    <th scope="row">
+                        <a href="{% url 'tracks:detail' racetime_group.track.id %}">{{ racetime_group.track }}</a><br/>
+                        <a href="{% url 'vehiclemodels:detail' racetime_group.model.id %}">
+                            {% modelimage racetime_group.model.make.image 'makelogo-list' racetime_group.model.make.name %}
+                            {{ racetime_group.model }}
+                        </a>
+                    </th>
+                    {% for time in racetime_group.times %}
+                        <td>
+                            {% if time %}
+                                <a href="{% url 'racetimes:detail' time.id %}">
+                                    {% trophy time.get_placement %}&nbsp;&nbsp;
+                                    {{ time.race_duration|durationformat }}
+                                </a>
+                                <br/>
+                                {% if racetime_group.fastest_time == time %}
+                                    <span class="badge badge-success">WINNING</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">
+                                        +{% time_diff time.race_duration racetime_group.fastest_time.race_duration %}
+                                    </span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

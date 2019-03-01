@@ -1,0 +1,24 @@
+{% load customtags %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Stopclutch</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% with request.resolver_match.view_name as view_name %}
+            <ul class="navbar-nav mr-auto">
+                {% nav_item_simple 'racetimes:index' 'Race times' %}
+                {% nav_item_list 'players:index,players:compare' 'List,Compare' 'Players' %}
+                {% nav_item_simple 'tracks:index' 'Tracks' %}
+                {% nav_item_list 'vehiclemakes:index,vehiclemodels:index' 'Makes,Models' 'Vehicles' %}
+                {% nav_item_simple 'games:index' 'Games' %}
+            </ul>
+            <ul class="navbar-nav">
+                {% nav_item_simple 'faqs' 'FAQs' %}
+            </ul>
+        {% endwith %}
+    </div>
+</nav>

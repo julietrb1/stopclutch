@@ -1,0 +1,13 @@
+{% load customtags %}
+<a href="{% url 'racetimes:detail' racetime.id %}">
+    {% modelimage racetime.vehicle_model.make.image 'makelogo-list' racetime.vehicle_model.make.name %}
+    {% if player_only %}
+        <b>{{ racetime.player }}</b>
+    {% else %}
+        <b>{{ racetime }}</b>
+    {% endif %}
+    <br/>
+    {{ racetime.race_duration|durationformat }}</a>
+{% if fastest_time and fastest_time != racetime %}
+    <small class="text-muted">+{% time_diff racetime.race_duration fastest_time.race_duration %}</small>
+{% endif %}

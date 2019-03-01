@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load customtags %}
+{% load bootstrap4 %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "FAQs" %}
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="mb-4">Frequently asked questions</h1>
+
+    <h2>What is Stopclutch for?</h2>
+    <p>Stopclutch is a website that holds the fastest race times from players of racing games{% if first_game %} such as
+        <a href="{% url 'games:detail' first_game.id %}">{% modelimage first_game.image 'makelogo-list' first_game.name %} {{ first_game.name }}</a>{% endif %}
+        , and allows for comparison and showcasing of said race times by several means. It was born from the desire to
+        keep track of who was the fastest in a group of friends, and quickly grew into a website published online.</p>
+
+    <h2>Who made it?</h2>
+    <p><i class="fas fa-hand-paper"></i> I did! My name's Dylan, and I'm a car/motorbike enthusiast from New Zealand.
+        I'm currently embarking on a Bachelor of Engineering (Software), hence the whole website thing and all. I enjoy
+        projects that have a positive practical impact on people (i.e. making things people want to use), and I'm hoping
+        this is one such project.</p>
+
+    <h2>Who gets to be a player?</h2>
+    <p>Anyone fortunate enough to have had a go on my racing wheel and to set a time that got uploaded for testing
+        purposes. There's no better data than real data, so they were kind enough to contribute their times.</p>
+
+    <h2>Can I use Stopclutch?</h2>
+    <p>Sure, come visit me. But seriously, it's currently a "closed" project in the sense that it's not technically open
+        for complete public consumption. Obviously you're consuming it if you're reading this, but it's read-only data
+        for the timebeing. After gauging public interest regarding others submitting their times, I'll consider making
+        it available for the public.</p>
+
+    <h2>Express your interest</h2>
+    {% if interest_form %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6">
+                    {% bootstrap_field interest_form.name placeholder='e.g. Eric Diaz' %}
+                </div>
+                <div class="col-sm-6">
+                    {% bootstrap_field interest_form.email placeholder='e.g. eric@example.com' %}
+                </div>
+                <div class="col-sm-6">
+                    {% bootstrap_field interest_form.country %}
+                </div>
+                <div class="col-sm-6">
+                    {% bootstrap_field interest_form.comments placeholder="Anything you'd like to let me know?" %}
+                </div>
+                <div class="col-sm-6">
+                    {% if interest_form.captcha %}
+                        {{ interest_form.captcha }}
+                    {% endif %}
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success" value="Express my interest">
+        </form>
+    {% else %}
+        <p class="text-success">Thanks! Your expression of interest has been sent, and I'll be more than happy to hear
+            from you.</p>
+    {% endif %}
+
+{% endblock %}

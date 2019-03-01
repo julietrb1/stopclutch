@@ -1,0 +1,11 @@
+<li class="nav-item {{ active }} dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false">
+        {{ parent_name }}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {% for nav_item in nav_items %}
+            <a href="{% url nav_item.path %}" class="dropdown-item">{{ nav_item.display_name }}</a>
+        {% endfor %}
+    </div>
+</li>

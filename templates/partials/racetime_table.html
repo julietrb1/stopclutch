@@ -1,0 +1,80 @@
+{% load customtags %}
+{% load humanize %}
+{% load bootstrap4 %}
+
+{% if racetimes %}
+    <div class="ml-2">
+        <table class="table">
+            <thead>
+            <tr>
+                {% if 'when' in columns %}
+                    <th scope="col" class="d-none d-lg-table-cell">When</th>
+                {% endif %}
+                {% if 'placement' in columns %}
+                    <th scope="col" class="d-none d-md-table-cell">#</th>
+                {% endif %}
+                {% if 'player' in columns %}
+                    <th scope="col" class="d-none d-md-table-cell">Player</th>
+                {% endif %}
+                {% if 'vehicle' in columns %}
+                    <th scope="col" class="d-none d-md-table-cell">Vehicle</th>
+                {% endif %}
+                {% if 'track' in columns %}
+                    <th scope="col" class="d-none d-md-table-cell">Track</th>
+                {% endif %}
+                {% if 'duration' in columns %}
+                    <th scope="col" class="d-none d-md-table-cell">Duration</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for racetime in racetimes %}
+                {% with racetime.get_placement as placement %}
+                    <tr class="race-row-{{ placement }} {% if placement in highlighted_placements %}table-active{% endif %}">
+                        {% if 'when' in columns %}
+                            <th scope="row"
+                                class="d-none d-lg-table-cell">{{ racetime.race_date_time|naturaltime }}</th>
+                        {% endif %}
+                        {% if 'placement' in columns %}
+                            <td class="d-table-cell placement-col">{% trophy placement %}</td>
+                        {% endif %}
+                        <td class="d-table-cell d-md-none">
+                            {% mobile_racetime racetime mobile_player_only fastest_time %}
+                        </td>
+                        {% if 'player' in columns %}
+                            <td class="d-none d-md-table-cell"><a
+                                    href="{% url 'players:detail' racetime.player_id %}">{{ racetime.player }}</a></td>
+                        {% endif %}
+                        {% if 'vehicle' in columns %}
+                            <td class="d-none d-md-table-cell">
+                                <a href="{% url 'vehiclemodels:detail' racetime.vehicle_model_id %}">
+                                    {% modelimage racetime.vehicle_model.make.image 'makelogo-list' racetime.vehicle_model.make.name %}
+                                    {{ racetime.vehicle_model }}
+                                </a>
+                            </td>
+                        {% endif %}
+                        {% if 'track' in columns %}
+                            <td class="d-none d-md-table-cell"><a
+                                    href="{% url 'tracks:detail' racetime.track_id %}">{{ racetime.track }}</a></td>
+                        {% endif %}
+                        {% if 'duration' in columns %}
+                            <td class="d-none d-md-table-cell"><a
+                                    href="{% url 'racetimes:detail' racetime.id %}">{{ racetime.race_duration|durationformat }}</a>
+                                {% if fastest_time and fastest_time != racetime %}
+                                    <small class="text-muted">
+                                        +{% time_diff racetime.race_duration fastest_time.race_duration %}</small>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if pagination %}
+        {% bootstrap_pagination pagination %}
+    {% endif %}
+{% else %}
+    <p>No race times are available.</p>
+{% endif %}

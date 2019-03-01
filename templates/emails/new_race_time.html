@@ -1,0 +1,25 @@
+{% load customtags %}
+{% load humanize %}
+{% load staticfiles %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">New race time{% if environment %} [{{ environment }}]{% endif %}</h1>
+    <p>
+        <b>Player:</b> {{ racetime.player }}<br/>
+        <b>Track:</b> {{ racetime.track }}<br/>
+        <b>Vehicle:</b> {{ racetime.vehicle_model }}<br/>
+        <b>Duration:</b> {{ racetime.race_duration|durationformat }}<br/>
+        <b>When:</b> {{ racetime.race_date_time }}<br/>
+        <b>Placement:</b> {{ racetime.get_placement|ordinal }}
+    </p>
+
+    <a class="btn btn-primary" href="{{ racetime_url }}">Go to race time</a>
+</div>
+</body>
+</html>

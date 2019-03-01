@@ -1,0 +1,86 @@
+@import "custom_bootstrap";
+@import "bootstrap/bootstrap";
+
+$make-logo-height-list: 23px;
+$make-logo-height-details: 50px;
+$placement-1-color: #FBA442;
+$placement-2-color: #2FB465;
+$placement-3-color: #4D95B4;
+$background-breakpoint: sm;
+
+.placement {
+  &-1 {
+    color: $placement-1-color;
+  }
+
+  &-2 {
+    color: $placement-2-color;
+  }
+
+  &-3 {
+    color: $placement-3-color;
+  }
+
+  &-col {
+    white-space: nowrap;
+  }
+}
+
+.race-row {
+
+  &-1, &-2, &-3 {
+    border-left: 3px solid;
+  }
+
+  &-1 {
+    border-left-color: $placement-1-color;
+  }
+
+  &-2 {
+    border-left-color: $placement-2-color;
+  }
+
+  &-3 {
+    border-left-color: $placement-3-color;
+  }
+}
+
+.makelogo {
+  &-detail, &-list {
+    vertical-align: text-top;
+    object-fit: contain;
+  }
+
+  &-detail {
+    max-height: $make-logo-height-details;
+    width: $make-logo-height-details + 10;
+  }
+
+  &-list {
+    max-height: $make-logo-height-list;
+    width: $make-logo-height-list + 10;
+  }
+}
+
+.player-compare-success {
+  background: lighten($green, 50%);
+}
+
+html {
+  @include media-breakpoint-up($background-breakpoint) {
+    background: radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 8px 9px;
+    background-color: #282828;
+    background-size: 16px 16px;
+  }
+}
+
+.main-content-container {
+  background: white;
+
+  @include media-breakpoint-up($background-breakpoint) {
+    border-radius: 10px;
+  }
+}

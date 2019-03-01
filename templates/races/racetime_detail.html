@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load bootstrap4 %}
+{% load customtags %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Race times" "racetimes:index" %}
+    {% breadcrumb "Details" %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">
+        <i class="fas fa-stopwatch mr-2"></i>
+        {% block title %}Race time{% endblock %}
+        <small class="text-muted ml-3">{% trophy placement %}</small>
+    </h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-6 col-md-12 pb-4">
+                    <b>Player</b><br/>
+                    <a href="{% url 'players:detail' racetime.player_id %}">{{ racetime.player }}</a>
+                </div>
+                <div class="col-6 col-md-12 pb-4">
+                    <b>Vehicle</b><br/>
+                    <a href="{% url 'vehiclemodels:detail' racetime.vehicle_model_id %}">
+                        {% modelimage racetime.vehicle_model.make.image 'makelogo-list' racetime.vehicle_model.make.name %}
+                        {{ racetime.vehicle_model }}
+                    </a>
+                </div>
+                <div class="col-6 col-md-12 pb-4">
+                    <b>Track</b><br/>
+                    <a href="{% url 'tracks:detail' racetime.track_id %}">{{ racetime.track }}</a>
+                </div>
+                <div class="col-6 col-md-12 pb-4">
+                    <b>Game</b><br/>
+                    <a href="{% url 'games:detail' racetime.game_id %}">
+                        {% modelimage racetime.game.image 'makelogo-list' racetime.game.name %}
+                        {{ racetime.game }}
+                    </a>
+                </div>
+                <div class="col-6 col-md-12 pb-4">
+                    <b>Duration</b><br/>
+                    {{ racetime.race_duration|durationformat }}
+                </div>
+                <div class="col-6 col-md-12 pb-4">
+                    <b>When</b><br/>
+                    {{ racetime.race_date_time|naturaltime }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            {% racetimetable category_times category_times racetime_columns highlighted_placements fastest_time mobile_player_only %}
+        </div>
+    </div>
+{% endblock %}

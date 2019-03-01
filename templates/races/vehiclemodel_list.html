@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load customtags %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Vehicle models" %}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        <i class="fas fa-car mr-2"></i>
+        {% block title %}Models{% endblock %}
+    </h1>
+    {% if object_list %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Race times</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for vehiclemodel in object_list %}
+                <tr>
+                    <th scope="row"><a href="{% url 'vehiclemodels:detail' vehiclemodel.id %}">
+                        {% modelimage vehiclemodel.make.image 'makelogo-list' vehiclemodel.make.name %}
+                        {{ vehiclemodel }}
+                    </a></th>
+                    <td>{{ vehiclemodel.racetime_set.count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% bootstrap_pagination page_obj %}
+    {% else %}
+        <p>No models are available.</p>
+    {% endif %}
+{% endblock %}
