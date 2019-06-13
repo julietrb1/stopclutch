@@ -1,4 +1,5 @@
 Django==2.1.7
+django-heroku
 dj-database-url
 django-appconf==1.0.2
 django-bootstrap4==0.0.7
