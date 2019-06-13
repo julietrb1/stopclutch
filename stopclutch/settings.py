@@ -128,5 +128,5 @@ REST_FRAMEWORK = {
     }
 }
 
-SILENCED_SYSTEM_CHECKS = [None if IS_PRODUCTION else 'captcha.recaptcha_test_key_error']
+SILENCED_SYSTEM_CHECKS = [None if IS_TEST else 'captcha.recaptcha_test_key_error']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
