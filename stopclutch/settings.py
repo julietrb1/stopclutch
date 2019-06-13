@@ -4,12 +4,9 @@ import os
 # from stopclutch.secrets import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-IS_PRODUCTION = 'PRODUCTION' in os.environ
-
-if IS_PRODUCTION:
-    from stopclutch.settings_prod import *
-else:
-    from stopclutch.settings_dev import *
+DEBUG = os.environ == 'DEV'
+IS_TEST = 'TRAVIS' in os.environ
+IS_PRODUCTION = not (DEBUG or IS_TEST)
 
 INSTALLED_APPS = [
     'races.apps.RacesConfig',
@@ -79,6 +76,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
