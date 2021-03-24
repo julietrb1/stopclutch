@@ -5,9 +5,9 @@ import dj_database_url
 # from stopclutch.secrets import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEBUG = os.environ == 'DEV'
 IS_TEST = 'TRAVIS' in os.environ
-IS_PRODUCTION = not (DEBUG or IS_TEST)
+IS_PRODUCTION = 'PROD' in os.environ
+DEBUG = not IS_TEST and not IS_PRODUCTION
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split() if IS_PRODUCTION else []
 
 if IS_TEST:
