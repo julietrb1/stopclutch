@@ -130,3 +130,4 @@ REST_FRAMEWORK = {
 
 SILENCED_SYSTEM_CHECKS = [None if IS_TEST else 'captcha.recaptcha_test_key_error']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
