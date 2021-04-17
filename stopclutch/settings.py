@@ -10,29 +10,28 @@ IS_PRODUCTION = 'PROD' in os.environ
 DEBUG = not IS_TEST and not IS_PRODUCTION
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split() if IS_PRODUCTION else []
 
-if IS_TEST:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'travis_ci_test',
-            'USER': 'postgres',
-            'PASSWORD': '',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
-    }
-elif IS_PRODUCTION:
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
-    }
+# if IS_TEST:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': 'travis_ci_test',
+#             'USER': 'postgres',
+#             'PASSWORD': '',
+#             'HOST': '127.0.0.1',
+#             'PORT': '5432',
+#         }
+#     }
 
-elif DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangodatabase',
+        'USER': 'dbadmin',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
+}
 
 SECRET_KEY = os.getenv('SECRET_KEY') if IS_PRODUCTION else '!*8(_j2!%+nb14fd(4r+k-*&0t3e19hxh@dr=#tvl1x^4in$sy'
 INSTALLED_APPS = [
