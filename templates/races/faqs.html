@@ -29,37 +29,6 @@
     <h2>Can I use Stopclutch?</h2>
     <p>Sure, come visit me. But seriously, it's currently a "closed" project in the sense that it's not technically open
         for complete public consumption. Obviously you're consuming it if you're reading this, but it's read-only data
-        for the timebeing. After gauging public interest regarding others submitting their times, I'll consider making
+        for the time being. After gauging public interest regarding others submitting their times, I'll consider making
         it available for the public.</p>
-
-    <h2>Express your interest</h2>
-    {% if interest_form %}
-        <form method="post">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-sm-6">
-                    {% bootstrap_field interest_form.name placeholder='e.g. Eric Diaz' %}
-                </div>
-                <div class="col-sm-6">
-                    {% bootstrap_field interest_form.email placeholder='e.g. eric@example.com' %}
-                </div>
-                <div class="col-sm-6">
-                    {% bootstrap_field interest_form.country %}
-                </div>
-                <div class="col-sm-6">
-                    {% bootstrap_field interest_form.comments placeholder="Anything you'd like to let me know?" %}
-                </div>
-                <div class="col-sm-6">
-                    {% if interest_form.captcha %}
-                        {{ interest_form.captcha }}
-                    {% endif %}
-                </div>
-            </div>
-            <input type="submit" class="btn btn-success" value="Express my interest">
-        </form>
-    {% else %}
-        <p class="text-success">Thanks! Your expression of interest has been sent, and I'll be more than happy to hear
-            from you.</p>
-    {% endif %}
-
 {% endblock %}
