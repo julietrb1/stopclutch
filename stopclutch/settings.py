@@ -74,8 +74,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Pacific/Auckland'
+LANGUAGE_CODE = os.getenv('LANGUAGE_CODE') or 'en-AU'
+TIME_ZONE = os.getenv('TIME_ZONE') or 'Australia/Sydney'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
