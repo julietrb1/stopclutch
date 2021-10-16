@@ -8,6 +8,11 @@ $placement-2-color: #2FB465;
 $placement-3-color: #4D95B4;
 $background-breakpoint: sm;
 
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
+}
+
 .placement {
   &-1 {
     color: $placement-1-color;
